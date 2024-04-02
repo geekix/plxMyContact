@@ -1,3 +1,6 @@
+﻿## Version 1.8.3 (02/04/2024) ##
+Fix config $aTemplates 
+
 ﻿## Version 1.8.2 (18/03/2024) ##
 Fix config aTemplate (compatibilité Pluxml 5.9rc6)
 Formulaire
