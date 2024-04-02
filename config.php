@@ -62,12 +62,15 @@ $var['captcha'] = $plxPlugin->getParam('captcha')=='' ? '1' : $plxPlugin->getPar
 $var['url'] = $plxPlugin->getParam('url')=='' ? 'contact' : $plxPlugin->getParam('url');
 $var['label'] =  $plxPlugin->getParam('label')=='' ? 1 : $plxPlugin->getParam('label');
 $var['placeholder'] =  $plxPlugin->getParam('placeholder')=='' ? 0 : $plxPlugin->getParam('placeholder');
-# On récupère les templates des pages statiques du thème en cours
-$files = plxGlob::getInstance(PLX_ROOT.$plxAdmin->aConf['racine_themes'].$plxAdmin->aConf['style'],!1,!0,'');#Fix 5.9RC2+
-if ($array = $files->query('/^static(?:[_\-\w]+)?\.php$/')) {
-	foreach($array as $k=>$v)
-		$aTemplates[$v] = $v;
-}
+	# On récupère les templates des pages statiques
+	$glob = plxGlob::getInstance(PLX_ROOT . $plxAdmin->aConf['racine_themes'] . $plxAdmin->aConf['style'], false, true, '#^^static(?:-[\w-]+)?\.php$#');
+	if (!empty($glob->aFiles)) {
+		$aTemplates = array();
+		foreach($glob->aFiles as $v)
+			$aTemplates[$v] = basename($v, '.php');
+	} else {
+		$aTemplates = array('' => L_NONE1);
+	}
 
 if(function_exists('mail')) {
 	echo '<p style="color:green"><strong>'.$plxPlugin->getLang('L_MAIL_AVAILABLE').'</strong></p>';
